@@ -1,0 +1,77 @@
+services:
+  ide:
+    image: ogamma/ide:latest
+    container_name: ide
+    expose:
+      - "8080"
+    env_file:
+      - .env
+    volumes:
+      - opcua-pki:/app/pki
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  nginx-proxy-manager:
+    image: jc21/nginx-proxy-manager:latest
+    container_name: npm
+    ports:
+      - "80:80"
+      - "443:443"
+      - "81:81"
+    volumes:
+      - npm-data:/data
+      - npm-letsencrypt:/etc/letsencrypt
+    depends_on:
+      - ide
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: pg
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-uns}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-unspassword}
+      - POSTGRES_DB=uns_explorer
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-uns}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL:-admin@example.com}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD:-admin}
+    ports:
+      - "4888:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+  opcplc:
+    image: 'mcr.microsoft.com/iotedge/opc-plc:latest'
+    hostname: opcplc
+    container_name: opcplc
+    ports:
+      - '50000:50000'
+    command: '--autoaccept'
+    volumes:
+      - 'opcplc-data:/app/pki'
+    restart: unless-stopped
+
+volumes:
+  postgres-data:
+  npm-data:
+  npm-letsencrypt:
+  opcplc-data:
+  pgadmin-data:
+  opcua-pki:
