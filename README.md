@@ -206,4 +206,4 @@ Data (database, proxy configuration, SSL certificates) is stored in Docker named
 
 ## Support
 
-- Issues: https://github.com/ogamma/ide/issues
+- Issues: https://github.com/onewayautomation/ide/issues
