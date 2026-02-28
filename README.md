@@ -2,6 +2,8 @@
 
 A web application for exploring industrial data published on **MQTT brokers** and exposed via **OPC UA** servers.
 
+![Industrial Data Explorer](ide.png)
+
 ## Prerequisites
 
 - [Docker](https://docs.docker.com/get-docker/) 24+ with the Compose plugin
