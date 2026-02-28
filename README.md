@@ -19,13 +19,13 @@ pre-built image archive (useful for air-gapped or restricted environments).
 #### 1. Download the compose file
 
 ```bash
-curl -O https://raw.githubusercontent.com/ogamma/ide/main/release/ide.yml
+curl -O https://github.com/onewayautomation/ide/blob/main/docker-compose.yml
 ```
 
 #### 2. Create the environment file
 
 ```bash
-curl -o .env https://raw.githubusercontent.com/ogamma/ide/main/release/.env.example
+curl -o .env https://github.com/onewayautomation/ide/blob/main/env.example
 ```
 
 Open `.env` in a text editor and at minimum set:
@@ -39,7 +39,7 @@ Open `.env` in a text editor and at minimum set:
 #### 3. Start the application
 
 ```bash
-docker compose -f ide.yml up -d
+docker compose up -d
 ```
 
 Docker will pull the images automatically on first run.
@@ -72,8 +72,8 @@ docker images ogamma/ide
 #### 3. Download the compose and environment files
 
 ```bash
-curl -O https://raw.githubusercontent.com/ogamma/ide/main/release/ide.yml
-curl -o .env https://raw.githubusercontent.com/ogamma/ide/main/release/.env.example
+curl -O https://github.com/onewayautomation/ide/blob/main/docker-compose.yml
+curl -o .env https://github.com/onewayautomation/ide/blob/main/env.example
 ```
 
 #### 4. Configure the environment
@@ -89,7 +89,7 @@ Open `.env` and set at minimum:
 #### 5. Start the application
 
 ```bash
-docker compose -f ide.yml up -d
+docker compose up -d
 ```
 
 ---
@@ -181,7 +181,7 @@ Default pgAdmin credentials are set by `PGADMIN_EMAIL` and `PGADMIN_PASSWORD` in
 1. Create a LinkedIn app at https://www.linkedin.com/developers/
 2. Set the **Authorized Redirect URL** to `https://<your-domain>/api/auth/linkedin/callback`
 3. Fill in `LINKEDIN_CLIENT_ID` and `LINKEDIN_CLIENT_SECRET` in `.env`
-4. Restart: `docker compose -f ide.yml restart ide`
+4. Restart: `docker compose restart ide`
 
 ### Email Verification on Registration
 
@@ -190,14 +190,14 @@ Fill in the `SMTP_*` variables in `.env` with your mail server details. When `SM
 ## Updating
 
 ```bash
-docker compose -f ide.yml pull
-docker compose -f ide.yml up -d
+docker compose pull
+docker compose up -d
 ```
 
 ## Stopping
 
 ```bash
-docker compose -f ide.yml down
+docker compose down
 ```
 
 Data (database, proxy configuration, SSL certificates) is stored in Docker named volumes and is preserved across restarts and updates.
