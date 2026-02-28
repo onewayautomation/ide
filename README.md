@@ -21,13 +21,13 @@ pre-built image archive (useful for air-gapped or restricted environments).
 #### 1. Download the compose file
 
 ```bash
-curl -O https://github.com/onewayautomation/ide/blob/main/docker-compose.yml
+curl -O https://raw.githubusercontent.com/onewayautomation/ide/refs/heads/main/docker-compose.yml
 ```
 
 #### 2. Create the environment file
 
 ```bash
-curl -o .env https://github.com/onewayautomation/ide/blob/main/env.example
+curl -o .env https://raw.githubusercontent.com/onewayautomation/ide/refs/heads/main/.env.example
 ```
 
 Open `.env` in a text editor and at minimum set:
@@ -74,8 +74,8 @@ docker images ogamma/ide
 #### 3. Download the compose and environment files
 
 ```bash
-curl -O https://github.com/onewayautomation/ide/blob/main/docker-compose.yml
-curl -o .env https://github.com/onewayautomation/ide/blob/main/env.example
+curl -O https://raw.githubusercontent.com/onewayautomation/ide/refs/heads/main/docker-compose.yml
+curl -o .env https://raw.githubusercontent.com/onewayautomation/ide/refs/heads/main/.env.example
 ```
 
 #### 4. Configure the environment
