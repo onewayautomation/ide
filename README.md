@@ -20,8 +20,16 @@ pre-built image archive (useful for air-gapped or restricted environments).
 
 #### 1. Download the compose file
 
+##### Linux / x86:
+
 ```bash
 curl -O https://raw.githubusercontent.com/onewayautomation/ide/refs/heads/main/docker-compose.yml
+```
+
+##### Raspberry PI / ARM64:
+
+```bash
+curl -O https://raw.githubusercontent.com/onewayautomation/ide/refs/heads/main/docker-compose-arm64.yml
 ```
 
 #### 2. Create the environment file
@@ -40,13 +48,21 @@ Open `.env` in a text editor and at minimum set:
 
 #### 3. Start the application
 
+
+##### Linux / x86:
+
 ```bash
 docker compose up -d
 ```
 
+##### Raspberry PI / ARM64:
+
+```bash
+docker compose -f docker-compose-arm64.yml up -d
+```
+
 Docker will pull the images automatically on first run.
 
----
 
 ### Option B — Load from offline image archive
 
@@ -54,11 +70,21 @@ Use this method if the host has no access to Docker Hub.
 
 #### 1. Download the image archive
 
+##### Linux / x86: 
+
 ```bash
 curl -L -o ide-image.zip https://onewayautomation.com/opcua-binaries/ide-image.zip
 ```
 
+##### Raspberry PI / ARM64
+
+```bash
+curl -L -o ide-image.zip https://onewayautomation.com/opcua-binaries/ide-image-arm64.zip
+```
+
 #### 2. Extract and load the image
+
+##### Linux / x85: 
 
 ```bash
 unzip ide-image.zip
@@ -71,10 +97,31 @@ Verify the image was loaded:
 docker images ogamma/ide
 ```
 
+##### Raspberry PI / ARM64:
+
+```bash
+unzip ide-image-arm64.zip
+docker load -i ide-image-arm64.tar.gz
+```
+
+Verify the image was loaded:
+
+```bash
+docker images ogamma/ide:arm64
+```
 #### 3. Download the compose and environment files
+
+##### Linux / x86:
 
 ```bash
 curl -O https://raw.githubusercontent.com/onewayautomation/ide/refs/heads/main/docker-compose.yml
+curl -o .env https://raw.githubusercontent.com/onewayautomation/ide/refs/heads/main/.env.example
+```
+
+##### Raspberry PI / ARM64:
+
+```bash
+curl -O https://raw.githubusercontent.com/onewayautomation/ide/refs/heads/main/docker-compose-arm64.yml
 curl -o .env https://raw.githubusercontent.com/onewayautomation/ide/refs/heads/main/.env.example
 ```
 
@@ -90,13 +137,20 @@ Open `.env` and set at minimum:
 
 #### 5. Start the application
 
+##### Linux / x86:
+
 ```bash
 docker compose up -d
 ```
 
----
+##### Raspberry PI / ARM64:
+```bash
+docker compose -f docker-compose-arm64.yml up -d
+```
 
 ## Configure the Reverse Proxy
+
+Note: not applicable for Raspberry PI.
 
 Open the **Nginx Proxy Manager** admin UI in your browser:
 
